@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 09:28:13 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/03 11:50:49 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/03 14:26:05 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,8 @@ typedef struct
 
 typedef struct
 {
-    long int    mtype;
-    char        text[64];
-} t_message;
-
-typedef struct
-{
     int         shared_memory_id;
     int         semaphore_id;
-    int         message_id;
 
     int         pos_x;
     int         pos_y;
