@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 09:29:01 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/03 11:50:56 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/03 12:06:57 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ static int get_semaphore(t_ctx *ctx)
         } arg;
 
         arg.val = 1; // start unlocked
-        semctl(ctx->semaphore_id, 0, SETVAL, arg);
+        if (semctl(ctx->semaphore_id, 0, SETVAL, arg) == -1)
+			return (0);
     }
     else // Semaphore already inited
     {
@@ -80,6 +81,8 @@ int init_ctx(t_ctx *ctx, int ac, char **av)
 	}
 	
     ctx->ipckey = ftok("ipc_demo.c", 42);
+	if (ctx->ipckey == -1)
+		return (0);
 
     if (!get_semaphore(ctx))
         return (0);
