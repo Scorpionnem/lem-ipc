@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 23:22:02 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/03 12:08:14 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/03 12:12:33 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,6 @@ void    handle_sigint(int sig)
 {
     (void)sig;
     running = 0;
-}
-
-void	type_shit(t_ctx *ctx)
-{
-	if (!ctx->is_main_process)
-		return ;
-	
-	t_message	message;
-
-	message.mtype = 1;
-	memset(message.text, 0, 64);
-
-	msgsnd(ctx->message_id, &message, sizeof(t_message), IPC_NOWAIT);
 }
 
 int	wait_for_start(t_ctx *ctx)
