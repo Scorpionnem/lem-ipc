@@ -1,28 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libs.h                                             :+:      :+:    :+:   */
+/*   game.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/02 23:21:37 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/03 09:30:06 by mbatty           ###   ########.fr       */
+/*   Created: 2025/09/03 10:38:00 by mbatty            #+#    #+#             */
+/*   Updated: 2025/09/03 11:48:09 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBS_H
-# define LIBS_H
+#ifndef GAME_H
+# define GAME_H
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
-# include <sys/ipc.h>
-# include <sys/shm.h>
-# include <sys/sem.h>
-# include <sys/msg.h>
-# include <sys/wait.h>
-# include <stdbool.h>
-# include <signal.h>
+# include "ctx.h"
+# include "render.h"
+
+int		game_logic(t_ctx *ctx);
+
+int is_dead(t_ctx *ctx);
+void    kill_cell(t_ctx *ctx);
+
+bool    is_in_bounds(t_ctx *ctx, int x, int y);
+
+typedef struct
+{
+    int teams;
+	int	last_team_checked;
+    int biggest_teams;
+    int biggest_team;
+    int players;
+} t_gameinfo;
+
+t_gameinfo  get_game_infos(t_ctx *ctx);
 
 #endif

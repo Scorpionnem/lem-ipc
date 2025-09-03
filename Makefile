@@ -5,7 +5,7 @@ INCLUDES = -I includes
 
 NAME = lemipc
 
-SRCS = src/main.c
+SRCS = src/main.c src/ctx.c src/game.c src/game_checks.c src/render.c
 
 OBJDIR = obj
 OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)
