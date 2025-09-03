@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 09:29:01 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/03 12:06:57 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/03 12:08:59 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int init_ctx(t_ctx *ctx, int ac, char **av)
 		return (0);
 	}
 	
-    ctx->ipckey = ftok("ipc_demo.c", 42);
+    ctx->ipckey = ftok("src/ctx.c", 42);
 	if (ctx->ipckey == -1)
 		return (0);
 

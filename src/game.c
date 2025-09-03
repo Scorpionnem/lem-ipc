@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 10:37:56 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/03 12:01:45 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/03 12:10:29 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,9 @@ int    game_logic(t_ctx *ctx)
     }
 
     move(ctx);
+
+	if (ctx->is_main_process && !ctx->is_dead)
+		render_board(ctx);
 
     sem_unlock(ctx->semaphore_id);
 

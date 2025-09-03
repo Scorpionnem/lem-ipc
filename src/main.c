@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 23:22:02 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/03 12:00:45 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/03 12:08:14 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void    start_game(t_ctx *ctx)
 int main(int ac, char **av)
 {
     t_ctx   ctx;
+
+    srand(time(NULL));
 
     if (!init_ctx(&ctx, ac, av))
         return (1);
