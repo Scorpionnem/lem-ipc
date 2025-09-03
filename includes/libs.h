@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 23:21:37 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/03 12:08:34 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/03 14:35:11 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@
 # include <stdbool.h>
 # include <signal.h>
 # include <time.h>
+# include "libft.h"
 
 #endif

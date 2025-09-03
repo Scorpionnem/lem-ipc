@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 23:22:02 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/03 12:12:33 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/03 14:48:08 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,10 @@ void sem_unlock(int semid)
     semop(semid, &sb, 1);
 }
 
-void    *error(const char *str)
+void    *error(char *str)
 {
-    printf("Error: %s\n", str);
+    ft_putstr_fd("Error: ", 1);
+    ft_putendl_fd(str, 1);
     return (NULL);
 }
 
@@ -56,7 +57,7 @@ int	try_to_start(t_ctx *ctx)
 
     t_gameinfo  gameinfos = get_game_infos(ctx);
 
-    if (gameinfos.teams >= 2 && gameinfos.biggest_teams >= 2)
+    if (gameinfos.teams >= MIN_TEAMS_COUNT && gameinfos.biggest_teams >= MIN_BIGGEST_TEAM_COUNT)
     {
         ctx->shared_memory->started = true;
         sem_unlock(ctx->semaphore_id);
@@ -87,7 +88,7 @@ int main(int ac, char **av)
 
     start_game(&ctx);
 
-    printf("Starting\n");
+    ft_putendl_fd("Starting", 1);
 
     while (running)
     {

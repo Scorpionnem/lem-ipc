@@ -1,7 +1,7 @@
 C = cc
 CFLAGS = -Wall -Wextra -Werror -MMD -MP
 
-INCLUDES = -I includes
+INCLUDES = -I includes -I libft/
 
 NAME = lemipc
 
@@ -11,13 +11,18 @@ OBJDIR = obj
 OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)
 DEPS = $(SRCS:%.c=$(OBJDIR)/%.d)
 
-all: $(NAME)
+LIBFT = libft/libft.a
+
+all: $(LIBFT) $(NAME)
 
 re: fclean all
 
+$(LIBFT):
+	@make -C libft all
+
 $(NAME): $(OBJS)
 	@echo Compiling $(NAME)
-	@$(C) $(CFLAGS) $(INCLUDES) -o $@ $^
+	@$(C) $(CFLAGS) $(INCLUDES) -o $@ $^ $(LIBFT)
 
 $(OBJDIR)/%.o: %.c
 	@mkdir -p $(dir $@)
@@ -25,10 +30,12 @@ $(OBJDIR)/%.o: %.c
 	@$(C) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
+	@make -C libft clean
 	@echo Cleaning objects
 	@rm -rf $(OBJDIR)
 
 fclean: clean
+	@make -C libft fclean
 	@echo Cleaning $(NAME)
 	@rm -rf $(NAME)
 

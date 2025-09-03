@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 10:38:00 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/03 11:48:09 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/03 14:46:51 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ bool    is_in_bounds(t_ctx *ctx, int x, int y);
 
 typedef struct
 {
-    int teams;
+	int teams;
 	int	last_team_checked;
-    int biggest_teams;
-    int biggest_team;
-    int players;
+	int biggest_teams;
+	int biggest_team;
+	int players;
 } t_gameinfo;
 
 t_gameinfo  get_game_infos(t_ctx *ctx);

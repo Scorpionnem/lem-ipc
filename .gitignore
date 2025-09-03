@@ -1,3 +1,6 @@
 en.subject.pdf
 lemipc
 obj/
+*.o
+*.a
+

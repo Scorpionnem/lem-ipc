@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 09:29:01 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/03 14:26:13 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/03 14:40:02 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int get_semaphore(t_ctx *ctx)
         ctx->semaphore_id = semget(ctx->ipckey, 1, 0666);
         if (ctx->semaphore_id == -1)
         {
-            printf("Error: could not get existing semaphore\n");
+			ft_putendl_fd("Error: could not get existing semaphore", 2);
             return 0;
         }
     }
@@ -69,14 +69,14 @@ int init_ctx(t_ctx *ctx, int ac, char **av)
 
 	if (ac != 2)
 	{
-		printf("Error: wrong amount of arguments\n");
+		ft_putendl_fd("Error: wrong amount of arguments", 2);
 		return (0);
 	}
 
 	ctx->team = atoi(av[1]);
 	if (ctx->team <= 0)
 	{
-		printf("Error: team can only be a positive number\n");
+		ft_putendl_fd("Error: team can only be a positive number", 2);
 		return (0);
 	}
 	
@@ -125,7 +125,7 @@ int delete_ctx(t_ctx *ctx)
 
     if (ctx->shared_memory->counter <= 0)
     {
-        printf("Last to leave\n");
+		ft_putendl_fd("Last process to leave, cleaning up.", 1);
         shmdt(ctx->shared_memory);
         shmctl(ctx->shared_memory_id, IPC_RMID, NULL);
         semctl(ctx->semaphore_id, 0, IPC_RMID);

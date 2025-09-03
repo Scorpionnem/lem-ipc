@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 10:40:31 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/03 11:44:51 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/03 14:46:43 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,21 @@
 
 void    render_board(t_ctx *ctx)
 {
-    printf("\033cGame Board:\n");
-    for (int y = 0; y < BOARD_SIZE; y++)
-    {
-        for (int x = 0; x < BOARD_SIZE; x++)
-            printf("%d", ctx->shared_memory->board[y][x]);
-        printf("\n");
-    }
-    t_gameinfo  gameinfos = get_game_infos(ctx);
+	ft_putendl_fd("\033cGame Board:", 1);
+	for (int y = 0; y < BOARD_SIZE; y++)
+	{
+		for (int x = 0; x < BOARD_SIZE; x++)
+			ft_putnbr_fd(ctx->shared_memory->board[y][x], 1);
+		ft_putchar_fd('\n', 1);
+	}
+	t_gameinfo  gameinfos = get_game_infos(ctx);
 	
-    printf("There are %d players\n", gameinfos.players);
-	printf("%d teams\n", gameinfos.teams);
-    printf("%d biggest team\n", gameinfos.biggest_teams);
+	ft_putnbr_fd(gameinfos.players, 1);
+	ft_putendl_fd(" players", 1);
+
+	ft_putnbr_fd(gameinfos.teams, 1);
+	ft_putendl_fd(" teams", 1);
+
+	ft_putnbr_fd(gameinfos.biggest_teams, 1);
+	ft_putendl_fd(" biggest teams", 1);
 }
