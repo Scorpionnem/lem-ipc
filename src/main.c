@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 23:22:02 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/03 14:48:08 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/03 14:52:13 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@ void    start_game(t_ctx *ctx)
 {
     if (!ctx->is_main_process)
         while (wait_for_start(ctx) && running)
-            usleep(10000);
+            usleep(SLEEP_TIME);
     else
         while (try_to_start(ctx) && running)
-            usleep(10000);
+            usleep(SLEEP_TIME);
 }
 
 int main(int ac, char **av)
@@ -94,7 +94,7 @@ int main(int ac, char **av)
     {
         if (!game_logic(&ctx))
             break ;
-        usleep(10000);
+        usleep(SLEEP_TIME);
     }
 
     return (delete_ctx(&ctx));

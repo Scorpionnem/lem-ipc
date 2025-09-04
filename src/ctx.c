@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 09:29:01 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/03 14:40:02 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/03 15:14:33 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int init_ctx(t_ctx *ctx, int ac, char **av)
 	ctx->team = atoi(av[1]);
 	if (ctx->team <= 0)
 	{
-		ft_putendl_fd("Error: team can only be a positive number", 2);
+		ft_putendl_fd("Error: team can only be a positive number (> 0)", 2);
 		return (0);
 	}
 	
@@ -101,12 +101,19 @@ int init_ctx(t_ctx *ctx, int ac, char **av)
         ctx->shared_memory->started = false;
     }
 
-    ctx->pos_x = ctx->shared_memory->counter;
-    ctx->pos_y = ctx->shared_memory->counter;
+    int targetX = 0;
+    int targetY = 0;
+    while (ctx->shared_memory->board[targetY][targetX] != 0)
+    {
+        targetX = rand() % BOARD_SIZE;
+        targetY = rand() % BOARD_SIZE;
+    }
+    
+    ctx->pos_x = targetX;
+    ctx->pos_y = targetY;
+    ctx->shared_memory->board[ctx->pos_y][ctx->pos_x] = ctx->team;
 	ctx->is_dead = false;
 	ctx->game_done = false;
-
-    ctx->shared_memory->board[ctx->pos_y][ctx->pos_x] = ctx->team;
 
     ctx->shared_memory->counter++;
     sem_unlock(ctx->semaphore_id);

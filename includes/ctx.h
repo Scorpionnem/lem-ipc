@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 09:28:13 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/03 14:48:25 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/03 14:59:13 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define MIN_TEAMS_COUNT 2
 # define MIN_BIGGEST_TEAM_COUNT 2
 # define DEATH_THRESHOLD 2
+# define SLEEP_TIME 200000
 
 typedef struct
 {

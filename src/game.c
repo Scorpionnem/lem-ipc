@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 10:37:56 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/03 14:46:00 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/03 15:09:26 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void    kill_cell(t_ctx *ctx)
 {
 	if (ctx->is_dead || ctx->game_done)
 		return ;
+	render_board(ctx);
 	ft_putendl_fd("I died...", 1);
 	ctx->is_dead = true;
 	ctx->shared_memory->board[ctx->pos_y][ctx->pos_x] = 0;
@@ -65,9 +66,6 @@ int	game_logic(t_ctx *ctx)
 {
 	sem_lock(ctx->semaphore_id);
 
-	if (ctx->is_main_process && !ctx->is_dead)
-		render_board(ctx);
-
 	if (!is_game_running(ctx))
 	{
 		sem_unlock(ctx->semaphore_id);
@@ -83,7 +81,7 @@ int	game_logic(t_ctx *ctx)
 
 	move(ctx);
 
-	if (ctx->is_main_process && !ctx->is_dead)
+	if (ctx->is_main_process)
 		render_board(ctx);
 
 	sem_unlock(ctx->semaphore_id);

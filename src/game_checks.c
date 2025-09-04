@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 10:41:09 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/03 14:48:16 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/03 15:11:02 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,15 @@ int is_dead(t_ctx *ctx)
 {
 	int neighbours = 0;
 
-	neighbours += is_in_bounds(ctx, ctx->pos_x + 1, ctx->pos_x + 1);
-	neighbours += is_in_bounds(ctx, ctx->pos_x - 1, ctx->pos_x - 1);
-	neighbours += is_in_bounds(ctx, ctx->pos_x + 1, ctx->pos_x - 1);
-	neighbours += is_in_bounds(ctx, ctx->pos_x - 1, ctx->pos_x + 1);
-	neighbours += is_in_bounds(ctx, ctx->pos_x + 1, ctx->pos_x);
-	neighbours += is_in_bounds(ctx, ctx->pos_x, ctx->pos_x + 1);
-	neighbours += is_in_bounds(ctx, ctx->pos_x - 1, ctx->pos_x);
-	neighbours += is_in_bounds(ctx, ctx->pos_x, ctx->pos_x - 1);
+	neighbours += is_in_bounds(ctx, ctx->pos_x + 1, ctx->pos_y + 1);
+	neighbours += is_in_bounds(ctx, ctx->pos_x - 1, ctx->pos_y - 1);
+	neighbours += is_in_bounds(ctx, ctx->pos_x + 1, ctx->pos_y - 1);
+	neighbours += is_in_bounds(ctx, ctx->pos_x - 1, ctx->pos_y + 1);
+	neighbours += is_in_bounds(ctx, ctx->pos_x + 1, ctx->pos_y);
+	neighbours += is_in_bounds(ctx, ctx->pos_x, ctx->pos_y + 1);
+	neighbours += is_in_bounds(ctx, ctx->pos_x - 1, ctx->pos_y);
+	neighbours += is_in_bounds(ctx, ctx->pos_x, ctx->pos_y - 1);
 	
-	ft_putstr_fd("I have ", 1);
-	ft_putnbr_fd(neighbours, 1);
-	ft_putendl_fd(" enemies around", 1);
-
 	if (neighbours >= DEATH_THRESHOLD)
 	{
 		kill_cell(ctx);
