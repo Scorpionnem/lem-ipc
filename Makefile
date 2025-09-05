@@ -44,6 +44,7 @@ fclean: clean
 	@make -C visualizer fclean
 	@echo Cleaning $(NAME)
 	@rm -rf $(NAME)
+	@rm -rf lemipc-visualizer
 
 run: $(NAME)
 	./$(NAME) avm/sample.avm
