@@ -1,9 +1,9 @@
 C = cc
 CFLAGS = -Wall -Wextra -Werror -MMD -MP -g
 
-INCLUDES = -I includes -I libft/
+INCLUDES = -I includes/ -I ../libft/
 
-NAME = lemipc
+NAME = lemipc-visualizer
 
 SRCS = src/main.c src/ctx.c src/error.c src/semaphore.c src/message.c
 
@@ -11,18 +11,14 @@ OBJDIR = obj
 OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)
 DEPS = $(SRCS:%.c=$(OBJDIR)/%.d)
 
-LIBFT = libft/libft.a
+LIBFT = ../libft/libft.a
 
-all: $(LIBFT) $(NAME) visualizer
-
-visualizer:
-	@make -C visualizer/ all
-	@mv visualizer/lemipc-visualizer .
+all: $(LIBFT) $(NAME)
 
 re: fclean all
 
 $(LIBFT):
-	@make -C libft all
+	@make -C ../libft all
 
 $(NAME): $(OBJS)
 	@echo Compiling $(NAME)
@@ -34,20 +30,18 @@ $(OBJDIR)/%.o: %.c
 	@$(C) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
-	@make -C libft clean
-	@make -C visualizer clean
+	@make -C ../libft clean
 	@echo Cleaning objects
 	@rm -rf $(OBJDIR)
 
 fclean: clean
-	@make -C libft fclean
-	@make -C visualizer fclean
+	@make -C ../libft fclean
 	@echo Cleaning $(NAME)
 	@rm -rf $(NAME)
 
 run: $(NAME)
 	./$(NAME) avm/sample.avm
 
-.PHONY: all clean fclean run re visualizer
+.PHONY: all clean fclean run re
 
 -include $(DEPS)

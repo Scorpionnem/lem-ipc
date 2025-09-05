@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   message.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/04 09:35:59 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/05 09:34:03 by mbatty           ###   ########.fr       */
+/*   Created: 2025/09/05 10:38:50 by mbatty            #+#    #+#             */
+/*   Updated: 2025/09/05 10:42:35 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libs.h"
+#ifndef MESSAGE_H
+# define MESSAGE_H
 
-int	error_int(char *str)
-{
-	ft_putstr_fd("Error: ", 1);
-	ft_putendl_fd(str, 1);
-	return (0);
-}
+char	*receive_message(int msgqid, int channel);
+int		send_message(char *msg, int msgqid, int channel, int targets_count);
 
-void	*error_ptr(char *str)
-{
-	ft_putstr_fd("Error: ", 1);
-	ft_putendl_fd(str, 1);
-	return (NULL);
-}
+#endif

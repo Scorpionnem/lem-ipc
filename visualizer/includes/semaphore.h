@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   singleton.c                                        :+:      :+:    :+:   */
+/*   semaphore.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/04 10:12:03 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/04 10:13:08 by mbatty           ###   ########.fr       */
+/*   Created: 2025/09/05 10:10:21 by mbatty            #+#    #+#             */
+/*   Updated: 2025/09/05 10:10:37 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	*running_instance(void)
-{
-	static int	running = 1;
+#ifndef SEMAPHORE_H
+# define SEMAPHORE_H
 
-	return (&running);
-}
+int	sem_lock(int semid);
+int	sem_unlock(int semid);
+
+#endif

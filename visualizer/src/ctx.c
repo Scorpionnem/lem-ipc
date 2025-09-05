@@ -6,21 +6,11 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 09:29:01 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/05 10:57:31 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/05 10:52:14 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ctx.h"
-
-static int	ctx_parse_args(t_ctx *ctx, int ac, char **av)
-{
-	if (ac != 2)
-		return (error_int("Wrong amount of arguments"));
-	ctx->team = ft_atoi(av[1]);
-	if (ctx->team <= 0)
-		return (error_int("Wrong team number (Should be > 0)"));
-	return (1);
-}
 
 static int	ctx_init_shm(t_ctx *ctx)
 {
@@ -97,11 +87,9 @@ int	ctx_init_game(t_ctx *ctx)
 	return (1);
 }
 
-int	init_ctx(t_ctx *ctx, int ac, char **av)
+int	init_ctx(t_ctx *ctx)
 {
 	ft_bzero(ctx, sizeof(t_ctx));
-	if (!ctx_parse_args(ctx, ac, av))
-		return (0);
 	if (!ctx_init_shared_variables(ctx))
 		return (0);
 	if (!ctx_init_game(ctx))

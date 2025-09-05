@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render.h                                           :+:      :+:    :+:   */
+/*   semaphore.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/03 10:40:00 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/04 09:41:26 by mbatty           ###   ########.fr       */
+/*   Created: 2025/09/05 10:10:21 by mbatty            #+#    #+#             */
+/*   Updated: 2025/09/05 10:10:37 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RENDER_H
-# define RENDER_H
+#ifndef SEMAPHORE_H
+# define SEMAPHORE_H
 
-# include "ctx.h"
-
-void	render_board(t_ctx *ctx);
+int	sem_lock(int semid);
+int	sem_unlock(int semid);
 
 #endif

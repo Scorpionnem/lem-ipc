@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 09:28:13 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/05 10:12:55 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/05 10:52:20 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_ctx
 	t_shared	*shm;
 }	t_ctx;
 
-int		init_ctx(t_ctx *ctx, int ac, char **av);
+int		init_ctx(t_ctx *ctx);
 int		delete_ctx(t_ctx *ctx);
 
 #endif
