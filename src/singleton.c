@@ -1,34 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libs.h                                             :+:      :+:    :+:   */
+/*   singleton.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/02 23:21:37 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/04 09:36:09 by mbatty           ###   ########.fr       */
+/*   Created: 2025/09/04 10:12:03 by mbatty            #+#    #+#             */
+/*   Updated: 2025/09/04 10:13:08 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBS_H
-# define LIBS_H
+int	*running_instance(void)
+{
+	static int	running = 1;
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
-# include <sys/ipc.h>
-# include <sys/shm.h>
-# include <sys/sem.h>
-# include <sys/msg.h>
-# include <sys/wait.h>
-# include <stdbool.h>
-# include <signal.h>
-# include <time.h>
-# include "libft.h"
-
-void	sem_lock(int semid);
-void	sem_unlock(int semid);
-void	*error(char *str);
-
-#endif
+	return (&running);
+}

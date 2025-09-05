@@ -1,11 +1,11 @@
 C = cc
-CFLAGS = -Wall -Wextra -Werror -MMD -MP
+CFLAGS = -Wall -Wextra -Werror -MMD -MP -g
 
 INCLUDES = -I includes -I libft/
 
 NAME = lemipc
 
-SRCS = src/main.c src/ctx.c src/game.c src/game_checks.c src/render.c
+SRCS = src/main.c src/ctx.c src/game.c src/game_checks.c src/render.c src/move.c src/semaphore.c src/error.c src/singleton.c
 
 OBJDIR = obj
 OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)

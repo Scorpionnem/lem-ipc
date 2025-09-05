@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libs.h                                             :+:      :+:    :+:   */
+/*   semaphore.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/02 23:21:37 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/04 09:36:09 by mbatty           ###   ########.fr       */
+/*   Created: 2025/09/04 09:34:25 by mbatty            #+#    #+#             */
+/*   Updated: 2025/09/04 10:19:54 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBS_H
-# define LIBS_H
+#include "libs.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
-# include <sys/ipc.h>
-# include <sys/shm.h>
-# include <sys/sem.h>
-# include <sys/msg.h>
-# include <sys/wait.h>
-# include <stdbool.h>
-# include <signal.h>
-# include <time.h>
-# include "libft.h"
+void	sem_lock(int semid)
+{
+	struct sembuf	sb;
 
-void	sem_lock(int semid);
-void	sem_unlock(int semid);
-void	*error(char *str);
+	sb.sem_num = 0;
+	sb.sem_op = -1;
+	sb.sem_flg = 0;
+	semop(semid, &sb, 1);
+}
 
-#endif
+void	sem_unlock(int semid)
+{
+	struct sembuf	sb;
+
+	sb.sem_num = 0;
+	sb.sem_op = 1;
+	sb.sem_flg = 0;
+	semop(semid, &sb, 1);
+}

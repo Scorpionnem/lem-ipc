@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 10:40:00 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/03 10:40:49 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/04 09:41:26 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 
 # include "ctx.h"
 
-void    render_board(t_ctx *ctx);
+void	render_board(t_ctx *ctx);
 
 #endif

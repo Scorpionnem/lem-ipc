@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 10:40:31 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/03 15:03:59 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/04 10:26:35 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,30 @@
 #define RESET "\033[0m"
 #define BLUE "\033[34m"
 
-void    render_board(t_ctx *ctx)
+static void	print_game_infos(t_ctx *ctx)
 {
+	t_gameinfo	gameinfos;
+
+	gameinfos = get_game_infos(ctx);
+	ft_putnbr_fd(gameinfos.players, 1);
+	ft_putendl_fd(" players", 1);
+	ft_putnbr_fd(gameinfos.teams, 1);
+	ft_putendl_fd(" teams", 1);
+	ft_putnbr_fd(gameinfos.biggest_teams, 1);
+	ft_putendl_fd(" biggest teams", 1);
+}
+
+void	render_board(t_ctx *ctx)
+{
+	int	y;
+	int	x;
+
 	ft_putendl_fd("\033cGame Board:", 1);
-	for (int y = 0; y < BOARD_SIZE; y++)
+	y = -1;
+	while (++y < BOARD_SIZE)
 	{
-		for (int x = 0; x < BOARD_SIZE; x++)
+		x = -1;
+		while (++x < BOARD_SIZE)
 		{
 			if (ctx->shared_memory->board[y][x] != 0)
 				ft_putstr_fd(RED, 1);
@@ -33,14 +51,5 @@ void    render_board(t_ctx *ctx)
 		}
 		ft_putchar_fd('\n', 1);
 	}
-	t_gameinfo  gameinfos = get_game_infos(ctx);
-	
-	ft_putnbr_fd(gameinfos.players, 1);
-	ft_putendl_fd(" players", 1);
-
-	ft_putnbr_fd(gameinfos.teams, 1);
-	ft_putendl_fd(" teams", 1);
-
-	ft_putnbr_fd(gameinfos.biggest_teams, 1);
-	ft_putendl_fd(" biggest teams", 1);
+	print_game_infos(ctx);
 }

@@ -1,34 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libs.h                                             :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/02 23:21:37 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/04 09:36:09 by mbatty           ###   ########.fr       */
+/*   Created: 2025/09/04 09:35:59 by mbatty            #+#    #+#             */
+/*   Updated: 2025/09/04 09:36:19 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBS_H
-# define LIBS_H
+#include "libs.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
-# include <sys/ipc.h>
-# include <sys/shm.h>
-# include <sys/sem.h>
-# include <sys/msg.h>
-# include <sys/wait.h>
-# include <stdbool.h>
-# include <signal.h>
-# include <time.h>
-# include "libft.h"
-
-void	sem_lock(int semid);
-void	sem_unlock(int semid);
-void	*error(char *str);
-
-#endif
+void	*error(char *str)
+{
+	ft_putstr_fd("Error: ", 1);
+	ft_putendl_fd(str, 1);
+	return (NULL);
+}

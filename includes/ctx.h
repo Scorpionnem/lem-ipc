@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 09:28:13 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/03 14:59:13 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/04 12:15:09 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,36 +22,54 @@
 # define DEATH_THRESHOLD 2
 # define SLEEP_TIME 200000
 
-typedef struct
+typedef union u_semun
+{
+	int				val;
+	struct semid_ds	*buf;
+	unsigned short	*array;
+}	t_semun;
+
+typedef struct s_message
+{
+	long	mtype;
+	char	mtext[64];
+}	t_message;
+
+typedef struct s_shared
 {
 	int		board[BOARD_SIZE][BOARD_SIZE];
 	int		counter;
 	bool	started;
-} shared_t;
+}	t_shared;
 
-typedef struct
+typedef struct s_ctx
 {
-	int         shared_memory_id;
-	int         semaphore_id;
+	int			shared_memory_id;
+	int			semaphore_id;
+	int			message_id;
 
-	int         pos_x;
-	int         pos_y;
-	int         team;
+	int			pos_x;
+	int			pos_y;
+	int			team;
+
+	int			target_x;
+	int			target_y;
 
 	bool		is_dead;
-	bool        is_main_process;
+	bool		is_main_process;
 	bool		game_done;
+	bool		is_team_leader;
 
-	key_t       ipckey;
-	shared_t    *shared_memory;
-} t_ctx;
+	key_t		ipckey;
+	t_shared	*shared_memory;
+}	t_ctx;
 
-int init_ctx(t_ctx *ctx, int ac, char **av);
-int delete_ctx(t_ctx *ctx);
+int		init_ctx(t_ctx *ctx, char **av);
+int		delete_ctx(t_ctx *ctx);
 
-void    *error(char *str);
-void 	sem_lock(int semid);
-void 	sem_unlock(int semid);
-void    kill_cell(t_ctx *ctx);
+void	*error(char *str);
+void	sem_lock(int semid);
+void	sem_unlock(int semid);
+void	kill_cell(t_ctx *ctx);
 
 #endif

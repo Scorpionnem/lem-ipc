@@ -1,34 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libs.h                                             :+:      :+:    :+:   */
+/*   ft_strjoin_free.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/02 23:21:37 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/04 09:36:09 by mbatty           ###   ########.fr       */
+/*   Created: 2024/10/08 16:19:50 by mbatty            #+#    #+#             */
+/*   Updated: 2025/09/04 14:47:34 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBS_H
-# define LIBS_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
-# include <sys/ipc.h>
-# include <sys/shm.h>
-# include <sys/sem.h>
-# include <sys/msg.h>
-# include <sys/wait.h>
-# include <stdbool.h>
-# include <signal.h>
-# include <time.h>
-# include "libft.h"
+char	*ft_strjoin_free(char *s1, char *s2)
+{
+	char	*dest;
+	size_t	len;
 
-void	sem_lock(int semid);
-void	sem_unlock(int semid);
-void	*error(char *str);
-
-#endif
+	if (!s1 || !s2)
+		return (0);
+	len = (ft_strlen(s1) + ft_strlen(s2) + 1);
+	dest = malloc(len * sizeof(char));
+	if (dest == NULL)
+		return (NULL);
+	ft_strlcpy(dest, s1, len);
+	ft_strlcat(dest, s2, len);
+	free(s1);
+	free(s2);
+	return ((char *)dest);
+}
