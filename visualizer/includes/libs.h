@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 23:21:37 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/05 10:39:05 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/06 16:00:04 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <time.h>
 # include "libft.h"
 # include <errno.h>
+# include "mlx.h"
 
 # include "semaphore.h"
 # include "message.h"

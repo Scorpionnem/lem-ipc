@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 09:28:13 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/05 10:52:20 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/06 19:02:35 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,14 @@ typedef struct s_shared
 	bool	started;
 }	t_shared;
 
+typedef struct	s_img {
+	void	*data;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_img;
+
 typedef struct s_ctx
 {
 	//Shared memory id
@@ -56,6 +64,11 @@ typedef struct s_ctx
 	int			pos_x;
 	int			pos_y;
 	int			team;
+
+	void		*mlx;
+	void		*mlx_win;
+	t_img		img;
+	bool		paused;
 
 	key_t		key;
 	//Shared memory

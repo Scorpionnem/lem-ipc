@@ -1,9 +1,9 @@
 C = cc
 CFLAGS = -Wall -Wextra -Werror -MMD -MP -g
 
-INCLUDES = -I includes/ -I ../libft/ -I minilibx-linux/
+INCLUDES = -I includes -I ../libft/
 
-NAME = lemipc-visualizer
+NAME = lemipc
 
 SRCS = src/main.c src/ctx.c src/error.c src/semaphore.c src/message.c
 
@@ -12,21 +12,17 @@ OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)
 DEPS = $(SRCS:%.c=$(OBJDIR)/%.d)
 
 LIBFT = ../libft/libft.a
-MLX = minilibx-linux/libmlx.a
 
-all: $(LIBFT) $(MLX) $(NAME)
+all: $(LIBFT) $(NAME)
 
 re: fclean all
 
 $(LIBFT):
 	@make -C ../libft all
 
-$(MLX):
-	@make -C minilibx-linux all
-
 $(NAME): $(OBJS)
 	@echo Compiling $(NAME)
-	@$(C) $(CFLAGS) $(INCLUDES) -o $@ $^ $(LIBFT) $(MLX) -lXext -lX11 -lm -lz
+	@$(C) $(CFLAGS) $(INCLUDES) -o $@ $^ $(LIBFT)
 
 $(OBJDIR)/%.o: %.c
 	@mkdir -p $(dir $@)
@@ -35,7 +31,6 @@ $(OBJDIR)/%.o: %.c
 
 clean:
 	@make -C ../libft clean
-	@make -C minilibx-linux clean
 	@echo Cleaning objects
 	@rm -rf $(OBJDIR)
 
