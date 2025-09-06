@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 09:28:13 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/06 19:02:35 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/06 22:40:57 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_shared
 	//Counts processes that have access to the shared memory
 	int		counter;
 	bool	started;
+	bool	paused;
 }	t_shared;
 
 typedef struct	s_img {

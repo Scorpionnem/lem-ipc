@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 09:28:38 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/06 19:18:10 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/06 22:47:55 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static void	move_to(t_ctx *ctx, int target_x, int target_y)
 		ctx->pos_y = target_y;
 	}
 }
-
 
 bool	is_walkable(t_ctx *ctx, int x, int y)
 {
@@ -129,20 +128,16 @@ int	is_dead(t_ctx *ctx)
 	return (0);
 }
 
-void	game_loop(t_ctx *ctx)
+t_gameinfo	get_game_infos(t_ctx *ctx);
+
+void	move(t_ctx *ctx)
 {
-	sem_lock(ctx->semid);
+	int	target_x = 10;
+	int	target_y = 10;
 
-	if (is_dead(ctx))
+	if (ctx->pos_x != target_x || ctx->pos_y != target_y)
 	{
-		g_running = false;
-		sem_unlock(ctx->semid);
-		return ;
-	}
-
-	if (ctx->pos_x != 10 || ctx->pos_y != 10)
-	{
-		int dir = find_path(ctx, 10, 10);
+		int dir = find_path(ctx, target_x, target_y);
 		if (dir == 1)
 			move_to(ctx, ctx->pos_x + 1, ctx->pos_y);
 		if (dir == 2)
@@ -152,9 +147,23 @@ void	game_loop(t_ctx *ctx)
 		if (dir == 4)
 			move_to(ctx, ctx->pos_x, ctx->pos_y - 1);
 	}
+}
 
-	sem_unlock(ctx->semid);
-	usleep(SLEEP_TIME);
+void	game_loop(t_ctx *ctx)
+{
+	if (ctx->shm->paused)
+		return ;
+
+	t_gameinfo	infos;
+
+	infos = get_game_infos(ctx);
+	if (is_dead(ctx) || infos.teams == 1)
+	{
+		g_running = false;
+		return ;
+	}
+
+	move(ctx);
 }
 
 int	main(int ac, char **av)
@@ -165,6 +174,11 @@ int	main(int ac, char **av)
 	if (!init_ctx(&ctx, ac, av))
 		return (1);
 	while (g_running)
+	{
+		sem_lock(ctx.semid);
 		game_loop(&ctx);
+		sem_unlock(ctx.semid);
+		usleep(SLEEP_TIME);
+	}
 	return (delete_ctx(&ctx));
 }

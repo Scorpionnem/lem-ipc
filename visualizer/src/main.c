@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 09:28:38 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/06 19:07:06 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/06 22:52:11 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	game_loop(t_ctx *ctx)
 
 	// draw_board(ctx);
 	printf("Connected users: %d\n", ctx->shm->counter);
-	
+
 	sem_unlock(ctx->semid);
 
 	usleep(SLEEP_TIME);
@@ -54,6 +54,12 @@ int	key_hook(int keycode, t_ctx *ctx)
 {
 	if (keycode == ESC_KEY)
 		close_window(ctx);
+	if (keycode == SPACE_KEY)
+	{
+		sem_lock(ctx->semid);
+		ctx->shm->paused = !ctx->shm->paused;
+		sem_unlock(ctx->semid);
+	}
 	return (0);
 }
 
@@ -111,7 +117,7 @@ void	draw_board(t_ctx *ctx)
 			else if (ctx->shm->board[y][x] == 4)
 				put_square(ctx, x * 32, y * 32, 0x00DD0099);
 			else
-				put_square(ctx, x * 32, y * 32, 0x0000FFFF);
+				put_square(ctx, x * 32, y * 32, 0x00009999);
 		}
 	}
 }
