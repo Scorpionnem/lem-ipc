@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbatty <mewen.mewen@hotmail.com>           +#+  +:+       +#+        */
+/*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:00:59 by mbatty            #+#    #+#             */
-/*   Updated: 2024/10/15 11:18:55 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/07 20:13:53 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,11 @@ static char	**ft_fillsplit(char **str, const char *s, char c)
 				return (NULL);
 			}
 			j++;
-			while (s[i] != c && s[i])
+			while (s[i] && s[i] != c)
 				i++;
 		}
+		if (!s[i])
+			break ;
 		i++;
 	}
 	str[j] = NULL;
