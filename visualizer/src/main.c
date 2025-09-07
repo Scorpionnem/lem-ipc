@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 09:28:38 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/06 22:52:11 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/07 11:08:00 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,6 @@ void	handle_sigint(int sig)
 {
 	(void)sig;
 	g_running = 0;
-}
-
-void	game_loop(t_ctx *ctx)
-{
-	sem_lock(ctx->semid);
-
-	// draw_board(ctx);
-	printf("Connected users: %d\n", ctx->shm->counter);
-
-	sem_unlock(ctx->semid);
-
-	usleep(SLEEP_TIME);
 }
 
 void	put_pixel(t_img *data, int x, int y, int color)

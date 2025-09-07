@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 10:37:08 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/05 11:00:09 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/07 19:55:56 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ int	send_message(char *msg, int msgqid, int channel, int targets_count)
 	ft_strlcpy(msgdata.mtext, msg, ft_strlen(msg) + 1);
 	while (i < targets_count)
 	{
-		if (msgsnd(msgqid, &msgdata, sizeof(msgdata.mtext), 0) == -1)
-			return (error_int("Failed to send message"));
+		if (msgsnd(msgqid, &msgdata, sizeof(msgdata.mtext), IPC_NOWAIT) == -1)
+			return (0);
 		i++;
 	}
 	return (1);

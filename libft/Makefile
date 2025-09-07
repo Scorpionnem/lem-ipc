@@ -15,7 +15,7 @@ OBJECTS = $(SOURCES:.c=.o)
 
 OBJECTSALL = $(SOURCESALL:.c=.o)
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 
 %.o : %.c
 		$(CC) $(CFLAGS) -o $@ -c $<

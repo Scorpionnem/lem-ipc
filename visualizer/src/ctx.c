@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 09:29:01 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/06 18:12:04 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/07 11:26:15 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ static int	ctx_init_shm(t_ctx *ctx)
 	if (ctx->shm == (void *)-1)
 		return (error_int("Failed to attach shared memory segment"));
 	if (first_access)
+	{
 		ft_bzero(ctx->shm, sizeof(t_shared));
+		ctx->shm->paused = true;
+	}
 	return (1);
 }
 
@@ -75,15 +78,14 @@ static int	ctx_init_shared_variables(t_ctx *ctx)
 		return (0);
 	if (!ctx_init_msgq(ctx))
 		return (0);
-	sem_lock(ctx->semid);
-	ctx->shm->counter++;
-	sem_unlock(ctx->semid);
 	return (1);
 }
 
 int	ctx_init_game(t_ctx *ctx)
 {
-	(void)ctx;
+	sem_lock(ctx->semid);
+	ctx->shm->counter++;
+	sem_unlock(ctx->semid);
 	return (1);
 }
 
@@ -103,7 +105,6 @@ int	delete_ctx(t_ctx *ctx)
 	ctx->shm->counter--;
 	if (ctx->shm->counter <= 0)
 	{
-		printf("Cleanin everything\n");
 		sem_unlock(ctx->semid);
 		shmdt(ctx->shm);
 		shmctl(ctx->shmid, IPC_RMID, NULL);

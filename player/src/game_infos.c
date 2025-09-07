@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 22:33:21 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/06 22:36:48 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/07 10:51:36 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,44 @@ static void	count_game_infos(t_gameinfo *gameinfos,
 	}
 }
 
+bool	team_exists(t_ctx *ctx, int team)
+{
+	int	y;
+	int	x;
+	
+	y = -1;
+	while (++y < BOARD_SIZE)
+	{
+		x = -1;
+		while (++x < BOARD_SIZE)
+		{
+			if (ctx->shm->board[y][x] == team)
+				return (true);
+		}
+	}
+	return (false);
+}
+
+int	players_in_team(t_ctx *ctx, int team)
+{
+	int	y;
+	int	x;
+	int	res;
+	
+	y = -1;
+	res = 0;
+	while (++y < BOARD_SIZE)
+	{
+		x = -1;
+		while (++x < BOARD_SIZE)
+		{
+			if (ctx->shm->board[y][x] == team)
+				res++;
+		}
+	}
+	return (res);
+}
+
 t_gameinfo	get_game_infos(t_ctx *ctx)
 {
 	t_gameinfo	res;
@@ -75,4 +113,3 @@ t_gameinfo	get_game_infos(t_ctx *ctx)
 	count_game_infos(&res, board);
 	return (res);
 }
-

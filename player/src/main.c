@@ -6,14 +6,14 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 09:28:38 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/06 22:47:55 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/07 20:01:33 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libs.h"
 #include "ctx.h"
 
-int	g_running = 1;
+sig_atomic_t	g_running = 1;
 
 void	handle_sigint(int sig)
 {
@@ -21,131 +21,55 @@ void	handle_sigint(int sig)
 	g_running = 0;
 }
 
-static void	move_to(t_ctx *ctx, int target_x, int target_y)
-{
-	if (target_x < 0 || target_x >= BOARD_SIZE
-		|| target_y < 0 || target_y >= BOARD_SIZE)
-		return ;
-	if (ctx->shm->board[target_y][target_x] == 0)
-	{
-		ctx->shm->board[target_y][target_x] = ctx->team;
-		ctx->shm->board[ctx->pos_y][ctx->pos_x] = 0;
-		ctx->pos_x = target_x;
-		ctx->pos_y = target_y;
-	}
-}
-
-bool	is_walkable(t_ctx *ctx, int x, int y)
-{
-	int	point;
-
-	point = 0;
-	if (x >= 0 && y >= 0 && x < BOARD_SIZE && y < BOARD_SIZE)
-	{
-		point = ctx->shm->board[y][x];
-		if (point == 0)
-			return (true);
-	}
-	return (false);
-}
-
-int heuristic(int x, int y, int target_x, int target_y)
-{
-	return 10 * (abs(target_x - x) + abs(target_y - y));
-}
-
-int	find_path(t_ctx *ctx, int target_x, int target_y)
-{
-	int	smallest = __INT_MAX__;
-	int	dir = 0;
-	int	pos_x;
-	int	pos_y;
-
-	pos_x = ctx->pos_x + 1;
-	pos_y = ctx->pos_y;
-	if (heuristic(pos_x, pos_y, target_x, target_y) < smallest
-		&& is_walkable(ctx, pos_x, pos_y))
-	{
-		dir = 1;
-		smallest = heuristic(pos_x, pos_y, target_x, target_y);
-	}
-	pos_x = ctx->pos_x;
-	pos_y = ctx->pos_y + 1;
-	if (heuristic(pos_x, pos_y, target_x, target_y) < smallest
-		&& is_walkable(ctx, pos_x, pos_y))
-	{
-		dir = 2;
-		smallest = heuristic(pos_x, pos_y, target_x, target_y);
-	}
-	pos_x = ctx->pos_x - 1;
-	pos_y = ctx->pos_y;
-	if (heuristic(pos_x, pos_y, target_x, target_y) < smallest
-		&& is_walkable(ctx, pos_x, pos_y))
-	{
-		dir = 3;
-		smallest = heuristic(pos_x, pos_y, target_x, target_y);
-	}
-	pos_x = ctx->pos_x;
-	pos_y = ctx->pos_y - 1;
-	if (heuristic(pos_x, pos_y, target_x, target_y) < smallest
-		&& is_walkable(ctx, pos_x, pos_y))
-	{
-		dir = 4;
-		smallest = heuristic(pos_x, pos_y, target_x, target_y);
-	}
-	return (dir);
-}
-
-bool	is_in_bounds(t_ctx *ctx, int x, int y)
-{
-	int	point;
-
-	point = 0;
-	if (x >= 0 && y >= 0 && x < BOARD_SIZE && y < BOARD_SIZE)
-	{
-		point = ctx->shm->board[y][x];
-		if (point != ctx->team && point != 0)
-			return (true);
-	}
-	return (false);
-}
-
-int	is_dead(t_ctx *ctx)
-{
-	int	neighbours;
-
-	neighbours = 0;
-	neighbours += is_in_bounds(ctx, ctx->pos_x + 1, ctx->pos_y + 1);
-	neighbours += is_in_bounds(ctx, ctx->pos_x - 1, ctx->pos_y - 1);
-	neighbours += is_in_bounds(ctx, ctx->pos_x + 1, ctx->pos_y - 1);
-	neighbours += is_in_bounds(ctx, ctx->pos_x - 1, ctx->pos_y + 1);
-	neighbours += is_in_bounds(ctx, ctx->pos_x + 1, ctx->pos_y);
-	neighbours += is_in_bounds(ctx, ctx->pos_x, ctx->pos_y + 1);
-	neighbours += is_in_bounds(ctx, ctx->pos_x - 1, ctx->pos_y);
-	neighbours += is_in_bounds(ctx, ctx->pos_x, ctx->pos_y - 1);
-	if (neighbours >= DEATH_THRESHOLD)
-		return (1);
-	return (0);
-}
-
 t_gameinfo	get_game_infos(t_ctx *ctx);
 
-void	move(t_ctx *ctx)
+void	send_target_message(t_ctx *ctx)
 {
-	int	target_x = 10;
-	int	target_y = 10;
+	char	*msg;
 
-	if (ctx->pos_x != target_x || ctx->pos_y != target_y)
+	msg = ft_strjoin_free(ft_strdup("TARGET "), ft_itoa(ctx->target_x));
+	msg = ft_strjoin_free(msg, ft_strdup(" "));	
+	msg = ft_strjoin_free(msg, ft_itoa(ctx->target_y));
+	send_message(msg, ctx->msgqid, ctx->team, players_in_team(ctx, ctx->team) - 1);
+	free(msg);
+}
+
+void	free_2d(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
 	{
-		int dir = find_path(ctx, target_x, target_y);
-		if (dir == 1)
-			move_to(ctx, ctx->pos_x + 1, ctx->pos_y);
-		if (dir == 2)
-			move_to(ctx, ctx->pos_x, ctx->pos_y + 1);
-		if (dir == 3)
-			move_to(ctx, ctx->pos_x - 1, ctx->pos_y);
-		if (dir == 4)
-			move_to(ctx, ctx->pos_x, ctx->pos_y - 1);
+		free(str[i]);
+		i++;
+	}
+	free(str);
+}
+
+void	handle_exchanges(t_ctx *ctx)
+{
+	if (!ctx->leader)
+	{
+		char	*msg = receive_message(ctx->msgqid, ctx->team);
+		if (msg)
+		{
+			char	**split_msg;
+			if (!ft_strncmp(msg, "TARGET", ft_strlen("TARGET")))
+			{
+				split_msg = ft_split(msg, ' ');
+				ctx->target_x = ft_atoi(split_msg[1]);
+				ctx->target_y = ft_atoi(split_msg[2]);
+				free_2d(split_msg);
+				free(msg);
+			}
+			else if (!ft_strncmp(msg, "BECOME LEADER!", ft_strlen("BECOME LEADER!")))
+				ctx->leader = true;
+		}
+	}	
+	else
+	{
+		send_target_message(ctx);
 	}
 }
 
@@ -157,11 +81,16 @@ void	game_loop(t_ctx *ctx)
 	t_gameinfo	infos;
 
 	infos = get_game_infos(ctx);
-	if (is_dead(ctx) || infos.teams == 1)
+	if (is_dead(ctx) || infos.teams == 1 || infos.biggest_teams == 1)
 	{
 		g_running = false;
+		if (ctx->leader)
+			send_message("BECOME LEADER!", ctx->msgqid, ctx->team, 1);
 		return ;
 	}
+
+	find_target(ctx);
+	handle_exchanges(ctx);
 
 	move(ctx);
 }

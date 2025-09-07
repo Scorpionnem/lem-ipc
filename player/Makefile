@@ -5,7 +5,7 @@ INCLUDES = -I includes -I ../libft/
 
 NAME = lemipc
 
-SRCS = src/main.c src/ctx.c src/error.c src/semaphore.c src/message.c
+SRCS = src/main.c src/ctx.c src/error.c src/semaphore.c src/message.c src/game_infos.c src/check_death.c src/move.c src/target.c
 
 OBJDIR = obj
 OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)
@@ -22,7 +22,7 @@ $(LIBFT):
 
 $(NAME): $(OBJS)
 	@echo Compiling $(NAME)
-	@$(C) $(CFLAGS) $(INCLUDES) -o $@ $^ $(LIBFT)
+	@$(C) $(CFLAGS) $(INCLUDES) -o $@ $^ $(LIBFT) -lm
 
 $(OBJDIR)/%.o: %.c
 	@mkdir -p $(dir $@)

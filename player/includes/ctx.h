@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 09:28:13 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/06 22:40:24 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/07 11:47:06 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ typedef struct s_gameinfo
 	int	players;
 }	t_gameinfo;
 
+typedef struct s_intpair
+{
+	int	first;
+	int	second;
+}	t_intpair;
 
 typedef union u_semun
 {
@@ -66,7 +71,12 @@ typedef struct s_ctx
 
 	int			pos_x;
 	int			pos_y;
+	int			prev_pos_x;
+	int			prev_pos_y;
 	int			team;
+	bool		leader;
+	int			target_x;
+	int			target_y;
 
 	key_t		key;
 	//Shared memory
@@ -75,5 +85,12 @@ typedef struct s_ctx
 
 int		init_ctx(t_ctx *ctx, int ac, char **av);
 int		delete_ctx(t_ctx *ctx);
+
+int		is_dead(t_ctx *ctx);
+void	move(t_ctx *ctx);
+bool	team_exists(t_ctx *ctx, int team);
+void	find_target(t_ctx *ctx);
+int		distance(int x, int y, int target_x, int target_y);
+int		players_in_team(t_ctx *ctx, int team);
 
 #endif

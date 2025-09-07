@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 09:29:01 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/06 18:16:51 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/07 19:12:38 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ static int	ctx_init_shm(t_ctx *ctx)
 	if (ctx->shm == (void *)-1)
 		return (error_int("Failed to attach shared memory segment"));
 	if (first_access)
+	{
 		ft_bzero(ctx->shm, sizeof(t_shared));
+		ctx->shm->paused = true;
+	}
 	return (1);
 }
 
@@ -85,21 +88,27 @@ static int	ctx_init_shared_variables(t_ctx *ctx)
 		return (0);
 	if (!ctx_init_msgq(ctx))
 		return (0);
-	sem_lock(ctx->semid);
-	ctx->shm->counter++;
-	sem_unlock(ctx->semid);
 	return (1);
 }
 
 int	ctx_init_game(t_ctx *ctx)
 {
 	sem_lock(ctx->semid);
+	
+	ctx->shm->counter++;
+	srand(time(NULL) + ctx->shm->counter);
+
+	if (!team_exists(ctx, ctx->team))
+		ctx->leader = true;
 
 	ctx->pos_x = rand() % BOARD_SIZE;
 	ctx->pos_y = rand() % BOARD_SIZE;
+	while (ctx->shm->board[ctx->pos_y][ctx->pos_x] != 0)
+	{
+		ctx->pos_x = rand() % BOARD_SIZE;
+		ctx->pos_y = rand() % BOARD_SIZE;
+	}
 	ctx->shm->board[ctx->pos_y][ctx->pos_x] = ctx->team;
-	
-	printf("%d %d\n", ctx->pos_x, ctx->pos_y);
 
 	sem_unlock(ctx->semid);
 	return (1);
@@ -108,13 +117,12 @@ int	ctx_init_game(t_ctx *ctx)
 int	init_ctx(t_ctx *ctx, int ac, char **av)
 {
 	ft_bzero(ctx, sizeof(t_ctx));
-	srand(time(NULL));
 	if (!ctx_parse_args(ctx, ac, av))
 		return (0);
 	if (!ctx_init_shared_variables(ctx))
 		return (0);
 	if (!ctx_init_game(ctx))
-		return (0);
+		return (delete_ctx(ctx));
 	return (1);
 }
 
@@ -125,7 +133,6 @@ int	delete_ctx(t_ctx *ctx)
 	ctx->shm->board[ctx->pos_y][ctx->pos_x] = 0;
 	if (ctx->shm->counter <= 0)
 	{
-		printf("Cleanin everything\n");
 		sem_unlock(ctx->semid);
 		shmdt(ctx->shm);
 		shmctl(ctx->shmid, IPC_RMID, NULL);
