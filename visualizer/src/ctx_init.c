@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 11:19:34 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/08 11:25:23 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/08 16:09:07 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	ctx_init_game(t_ctx *ctx)
 {
 	sem_lock(ctx->semid);
 	ctx->shm->counter++;
+	ctx->team_selected = 1;
 	sem_unlock(ctx->semid);
 	return (1);
 }

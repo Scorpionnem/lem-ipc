@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 22:33:21 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/08 11:25:59 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/08 15:56:10 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	count_game_infos(t_gameinfo *gameinfos,
 				if (players_in_team > gameinfos->biggest_teams)
 				{
 					gameinfos->biggest_teams = players_in_team;
-					gameinfos->biggest_team = board[y][x];
+					gameinfos->biggest_team = gameinfos->last_team_checked;
 				}
 				gameinfos->teams++;
 				gameinfos->players += players_in_team;
@@ -110,6 +110,7 @@ t_gameinfo	get_game_infos(t_ctx *ctx)
 	ft_memset(&res, 0, sizeof(t_gameinfo));
 	ft_memcpy(&board, &ctx->shm->board,
 		sizeof(int [BOARD_SIZE][BOARD_SIZE]));
+	res.biggest_team = -2;
 	count_game_infos(&res, board);
 	return (res);
 }

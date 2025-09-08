@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 11:26:58 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/08 11:29:22 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/08 16:12:27 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		loop_hook(t_ctx *ctx);
 int		key_hook(int keycode, t_ctx *ctx);
-void	handle_click(int button, int x, int y, t_ctx *ctx);
+void	handle_click(int x, int y, t_ctx *ctx);
 
 int	close_window(t_ctx *ctx)
 {
@@ -22,10 +22,19 @@ int	close_window(t_ctx *ctx)
 	return (0);
 }
 
+#define SCROLL_UP 4
+#define SCROLL_DOWN 5
+
 int	mouse_press(int button, int x, int y, t_ctx *ctx)
 {
-	if (button == MOUSE_LEFT_CLICK || button == MOUSE_RIGHT_CLICK)
-		handle_click(button, x, y, ctx);
+	if (button == MOUSE_LEFT_CLICK)
+		handle_click(x, y, ctx);
+	if (button == SCROLL_UP)
+		ctx->team_selected++;
+	if (button == SCROLL_DOWN)
+		ctx->team_selected--;
+	if (ctx->team_selected <= 0)
+		ctx->team_selected = 1;
 	return (0);
 }
 
@@ -41,6 +50,7 @@ void	set_hooks(t_ctx *ctx)
 void	free_mlx(t_ctx *ctx)
 {
 	mlx_destroy_image(ctx->mlx, ctx->img.data);
+	mlx_destroy_image(ctx->mlx, ctx->crown_img.data);
 	mlx_destroy_window(ctx->mlx, ctx->mlx_win);
 	mlx_destroy_display(ctx->mlx);
 	free(ctx->mlx);
@@ -60,6 +70,9 @@ void	init_mlx(t_ctx *ctx)
 		return ;
 	ctx->img.addr = mlx_get_data_addr(ctx->img.data, &ctx->img.bits_per_pixel,
 			&ctx->img.line_length, &ctx->img.endian);
+	ctx->crown_img.data = mlx_xpm_file_to_image(ctx->mlx, "visualizer/assets/crown.xpm", &ctx->crown_img.width, &ctx->crown_img.height);
+	if (!ctx->crown_img.data)
+		return ;
 	set_hooks(ctx);
 	free_mlx(ctx);
 }

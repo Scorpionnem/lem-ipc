@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 09:28:13 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/08 11:26:32 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/08 16:09:00 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ typedef struct s_img
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+	int		width;
+	int		height;
 }				t_img;
 
 typedef struct s_ctx
@@ -81,9 +83,11 @@ typedef struct s_ctx
 	int			pos_x;
 	int			pos_y;
 	int			team;
+	int			team_selected;
 
 	void		*mlx;
 	void		*mlx_win;
+	t_img		crown_img;
 	t_img		img;
 	bool		paused;
 
@@ -94,7 +98,7 @@ typedef struct s_ctx
 
 int			init_ctx(t_ctx *ctx);
 int			delete_ctx(t_ctx *ctx);
-void		draw_board(t_ctx *ctx);
+void		draw_board(t_ctx *ctx, int biggest);
 t_gameinfo	get_game_infos(t_ctx *ctx);
 
 #endif
