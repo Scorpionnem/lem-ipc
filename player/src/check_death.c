@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 10:33:47 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/07 19:19:20 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/08 11:34:38 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	is_ennemy(t_ctx *ctx, int x, int y)
 	return (0);
 }
 
-static void	add_team_around(t_intpair teams_around[8], int team)
+static void	add_around(t_intpair teams_around[8], int team)
 {
 	int		i;
 
@@ -64,14 +64,14 @@ int	is_dead(t_ctx *ctx)
 	ft_bzero(&teams_around, 8 * sizeof(t_intpair));
 	while (i < 8)
 		teams_around[i++].first = -1;
-	add_team_around(teams_around, is_ennemy(ctx, ctx->pos_x + 1, ctx->pos_y + 1));
-	add_team_around(teams_around, is_ennemy(ctx, ctx->pos_x - 1, ctx->pos_y - 1));
-	add_team_around(teams_around, is_ennemy(ctx, ctx->pos_x + 1, ctx->pos_y - 1));
-	add_team_around(teams_around, is_ennemy(ctx, ctx->pos_x - 1, ctx->pos_y + 1));
-	add_team_around(teams_around, is_ennemy(ctx, ctx->pos_x + 1, ctx->pos_y));
-	add_team_around(teams_around, is_ennemy(ctx, ctx->pos_x, ctx->pos_y + 1));
-	add_team_around(teams_around, is_ennemy(ctx, ctx->pos_x - 1, ctx->pos_y));
-	add_team_around(teams_around, is_ennemy(ctx, ctx->pos_x, ctx->pos_y - 1));
+	add_around(teams_around, is_ennemy(ctx, ctx->pos_x + 1, ctx->pos_y + 1));
+	add_around(teams_around, is_ennemy(ctx, ctx->pos_x - 1, ctx->pos_y - 1));
+	add_around(teams_around, is_ennemy(ctx, ctx->pos_x + 1, ctx->pos_y - 1));
+	add_around(teams_around, is_ennemy(ctx, ctx->pos_x - 1, ctx->pos_y + 1));
+	add_around(teams_around, is_ennemy(ctx, ctx->pos_x + 1, ctx->pos_y));
+	add_around(teams_around, is_ennemy(ctx, ctx->pos_x, ctx->pos_y + 1));
+	add_around(teams_around, is_ennemy(ctx, ctx->pos_x - 1, ctx->pos_y));
+	add_around(teams_around, is_ennemy(ctx, ctx->pos_x, ctx->pos_y - 1));
 	i = 0;
 	while (i < 8)
 		if (teams_around[i++].second >= DEATH_THRESHOLD)

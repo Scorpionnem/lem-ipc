@@ -6,11 +6,12 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 10:34:34 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/07 12:00:45 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/08 11:45:15 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ctx.h"
+#include <math.h>
 
 static void	move_to(t_ctx *ctx, int target_x, int target_y)
 {
@@ -28,7 +29,7 @@ static void	move_to(t_ctx *ctx, int target_x, int target_y)
 	}
 }
 
-static bool	is_walkable(t_ctx *ctx, int x, int y)
+bool	is_walkable(t_ctx *ctx, int x, int y)
 {
 	int	point;
 
@@ -42,60 +43,48 @@ static bool	is_walkable(t_ctx *ctx, int x, int y)
 	return (false);
 }
 
-#include <math.h>
-
-int distance(int x, int y, int target_x, int target_y)
+int	distance(int x, int y, int target_x, int target_y)
 {
-	return (sqrt((x - target_x) * (x - target_x) + (y - target_y) * (y - target_y)));
+	return (sqrt((x - target_x) * (x - target_x)
+			+ (y - target_y) * (y - target_y)));
 }
+
+void	find_path2(t_ctx *ctx, int *dir, int *smallest);
 
 static int	find_path(t_ctx *ctx, int target_x, int target_y)
 {
-	int	smallest = __INT_MAX__;
-	int	dir = 0;
-	int	pos_x;
-	int	pos_y;
+	int	smallest;
+	int	dir;
 
-	pos_x = ctx->pos_x + 1;
-	pos_y = ctx->pos_y;
-	if (distance(pos_x, pos_y, target_x, target_y) < smallest
-		&& is_walkable(ctx, pos_x, pos_y))
-	{
-		dir = 1;
-		smallest = distance(pos_x, pos_y, target_x, target_y);
-	}
-	pos_x = ctx->pos_x;
-	pos_y = ctx->pos_y + 1;
-	if (distance(pos_x, pos_y, target_x, target_y) < smallest
-		&& is_walkable(ctx, pos_x, pos_y))
+	find_path2(ctx, &dir, &smallest);
+	if (distance(ctx->pos_x, ctx->pos_y + 1, target_x, target_y) < smallest
+		&& is_walkable(ctx, ctx->pos_x, ctx->pos_y + 1))
 	{
 		dir = 2;
-		smallest = distance(pos_x, pos_y, target_x, target_y);
+		smallest = distance(ctx->pos_x, ctx->pos_y + 1, target_x, target_y);
 	}
-	pos_x = ctx->pos_x - 1;
-	pos_y = ctx->pos_y;
-	if (distance(pos_x, pos_y, target_x, target_y) < smallest
-		&& is_walkable(ctx, pos_x, pos_y))
+	if (distance(ctx->pos_x - 1, ctx->pos_y, target_x, target_y) < smallest
+		&& is_walkable(ctx, ctx->pos_x - 1, ctx->pos_y))
 	{
 		dir = 3;
-		smallest = distance(pos_x, pos_y, target_x, target_y);
+		smallest = distance(ctx->pos_x - 1, ctx->pos_y, target_x, target_y);
 	}
-	pos_x = ctx->pos_x;
-	pos_y = ctx->pos_y - 1;
-	if (distance(pos_x, pos_y, target_x, target_y) < smallest
-		&& is_walkable(ctx, pos_x, pos_y))
+	if (distance(ctx->pos_x, ctx->pos_y - 1, target_x, target_y) < smallest
+		&& is_walkable(ctx, ctx->pos_x, ctx->pos_y - 1))
 	{
 		dir = 4;
-		smallest = distance(pos_x, pos_y, target_x, target_y);
+		smallest = distance(ctx->pos_x, ctx->pos_y - 1, target_x, target_y);
 	}
 	return (dir);
 }
 
 void	move(t_ctx *ctx)
 {
+	int	dir;
+
 	if (ctx->pos_x != ctx->target_x || ctx->pos_y != ctx->target_y)
 	{
-		int dir = find_path(ctx, ctx->target_x, ctx->target_y);
+		dir = find_path(ctx, ctx->target_x, ctx->target_y);
 		if (dir == 1)
 			move_to(ctx, ctx->pos_x + 1, ctx->pos_y);
 		if (dir == 2)

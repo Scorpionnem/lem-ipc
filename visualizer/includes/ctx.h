@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 09:28:13 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/08 11:08:34 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/08 11:26:32 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ typedef struct s_shared
 	bool	paused;
 }	t_shared;
 
-typedef struct	s_img {
+typedef struct s_img
+{
 	void	*data;
 	char	*addr;
 	int		bits_per_pixel;

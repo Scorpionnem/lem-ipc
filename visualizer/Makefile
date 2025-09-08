@@ -5,7 +5,7 @@ INCLUDES = -I includes/ -I ../libft/ -I minilibx-linux/
 
 NAME = lemipc-visualizer
 
-SRCS = src/main.c src/ctx.c src/error.c src/semaphore.c src/render.c src/game_infos.c src/strings.c
+SRCS = src/main.c src/ctx.c src/error.c src/semaphore.c src/render.c src/game_infos.c src/strings.c src/ctx_init.c src/mlx.c
 
 OBJDIR = obj
 OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)

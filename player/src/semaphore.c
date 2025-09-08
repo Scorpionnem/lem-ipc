@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 10:08:11 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/07 10:42:49 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/08 11:30:48 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 
 int	sem_lock(int semid)
 {
-	struct sembuf lock;
-	
+	struct sembuf	lock;
+
 	lock.sem_num = 0;
 	lock.sem_op = -1;
 	lock.sem_flg = 0;
-
 	if (semop(semid, &lock, 1) == -1)
 		return (error_int("Failed to execute semaphore lock operation"));
 	return (1);
@@ -27,12 +26,11 @@ int	sem_lock(int semid)
 
 int	sem_unlock(int semid)
 {
-	struct sembuf lock;
-	
+	struct sembuf	lock;
+
 	lock.sem_num = 0;
 	lock.sem_op = 1;
 	lock.sem_flg = 0;
-
 	if (semop(semid, &lock, 1) == -1)
 		return (error_int("Failed to execute semaphore unlock operation"));
 	return (1);

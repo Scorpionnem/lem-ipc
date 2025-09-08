@@ -14,7 +14,8 @@ SRCS = src/main.c \
 		src/check_death.c \
 		src/move.c \
 		src/target.c \
-		src/exchanges.c
+		src/exchanges.c \
+		src/ctx_init.c
 
 OBJDIR = obj
 OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)

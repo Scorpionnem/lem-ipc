@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 09:28:38 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/08 10:41:33 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/08 11:33:43 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,10 @@ void		handle_exchanges(t_ctx *ctx);
 
 void	game_loop(t_ctx *ctx)
 {
-	if (ctx->shm->paused)
-		return ;
-
 	t_gameinfo	infos;
 
+	if (ctx->shm->paused)
+		return ;
 	infos = get_game_infos(ctx);
 	if (is_dead(ctx) || infos.teams == 1 || infos.biggest_teams == 1)
 	{
@@ -39,10 +38,8 @@ void	game_loop(t_ctx *ctx)
 			send_message("BECOME LEADER!", ctx->msgqid, ctx->team, 1);
 		return ;
 	}
-
 	find_target(ctx);
 	handle_exchanges(ctx);
-
 	move(ctx);
 }
 

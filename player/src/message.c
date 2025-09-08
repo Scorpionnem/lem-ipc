@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 10:37:08 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/07 20:16:27 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/08 11:31:15 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*receive_message(int msgqid, int channel)
 {
 	t_message	msg;
-	
+
 	ft_bzero(&msg, sizeof(t_message));
 	if (msgrcv(msgqid, &msg, sizeof(msg.mtext), channel, IPC_NOWAIT) == -1)
 		return (NULL);

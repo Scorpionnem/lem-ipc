@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 10:16:51 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/08 10:22:01 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/08 11:25:48 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,18 @@ static void	put_pixel(t_img *data, int x, int y, int color)
 	char	*dst;
 
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	*(unsigned int *)dst = color;
 }
 
 static int	darken(int color, float factor)
 {
-	int r = ((color >> 16) & 0xFF) * factor;
-	int g = ((color >> 8) & 0xFF) * factor;
-	int b = (color & 0xFF) * factor;
+	int	r;
+	int	g;
+	int	b;
+
+	r = ((color >> 16) & 0xFF) * factor;
+	g = ((color >> 8) & 0xFF) * factor;
+	b = (color & 0xFF) * factor;
 	return ((r << 16) | (g << 8) | b);
 }
 
@@ -39,7 +43,8 @@ static void	put_square(t_ctx *ctx, int x, int y, int color)
 		cur_y = 0;
 		while (cur_y < SQUARE_SIZE)
 		{
-			if (cur_y == 0 || cur_x == 0 || cur_x + 1 == SQUARE_SIZE || cur_y + 1 == SQUARE_SIZE)
+			if (cur_y == 0 || cur_x == 0
+				|| cur_x + 1 == SQUARE_SIZE || cur_y + 1 == SQUARE_SIZE)
 				put_pixel(&ctx->img, cur_x + x, cur_y + y, darken(color, 0.5));
 			else
 				put_pixel(&ctx->img, cur_x + x, cur_y + y, color);

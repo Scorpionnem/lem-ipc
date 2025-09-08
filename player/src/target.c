@@ -6,11 +6,28 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 10:37:26 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/07 10:53:42 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/08 11:45:26 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ctx.h"
+
+bool	is_walkable(t_ctx *ctx, int x, int y);
+int		distance(int x, int y, int target_x, int target_y);
+
+void	find_path2(t_ctx *ctx, int *dir, int *smallest)
+{
+	*dir = 0;
+	*smallest = __INT_MAX__;
+	if (distance(ctx->pos_x + 1, ctx->pos_y,
+			ctx->target_x, ctx->target_y) < *smallest
+		&& is_walkable(ctx, ctx->pos_x + 1, ctx->pos_y))
+	{
+		*dir = 1;
+		*smallest = distance(ctx->pos_x + 1, ctx->pos_y,
+				ctx->target_x, ctx->target_y);
+	}
+}
 
 void	find_target(t_ctx *ctx)
 {
@@ -20,7 +37,6 @@ void	find_target(t_ctx *ctx)
 
 	if (!ctx->leader)
 		return ;
-
 	min_distance = __INT_MAX__;
 	y = -1;
 	while (++y < BOARD_SIZE)

@@ -1,37 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   semaphore.c                                        :+:      :+:    :+:   */
+/*   ctx_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/05 10:08:11 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/08 11:21:07 by mbatty           ###   ########.fr       */
+/*   Created: 2025/09/08 11:19:34 by mbatty            #+#    #+#             */
+/*   Updated: 2025/09/08 11:25:23 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ctx.h"
 
-int	sem_lock(int semid)
-{
-	struct sembuf	lock;
+int	ctx_init_msgq(t_ctx *ctx);
+int	ctx_init_sem(t_ctx *ctx);
+int	ctx_init_shm(t_ctx *ctx);
 
-	lock.sem_num = 0;
-	lock.sem_op = -1;
-	lock.sem_flg = 0;
-	if (semop(semid, &lock, 1) == -1)
-		return (error_int("Failed to execute semaphore lock operation"));
+int	ctx_init_game(t_ctx *ctx)
+{
+	sem_lock(ctx->semid);
+	ctx->shm->counter++;
+	sem_unlock(ctx->semid);
 	return (1);
 }
 
-int	sem_unlock(int semid)
+int	ctx_init_shared_variables(t_ctx *ctx)
 {
-	struct sembuf	lock;
-
-	lock.sem_num = 0;
-	lock.sem_op = 1;
-	lock.sem_flg = 0;
-	if (semop(semid, &lock, 1) == -1)
-		return (error_int("Failed to execute semaphore unlock operation"));
+	ctx->key = ftok("Makefile", 42);
+	if (ctx->key == -1)
+		return (error_int("Failed to get IPC key"));
+	if (!ctx_init_shm(ctx))
+		return (0);
+	if (!ctx_init_sem(ctx))
+		return (0);
+	if (!ctx_init_msgq(ctx))
+		return (0);
 	return (1);
 }

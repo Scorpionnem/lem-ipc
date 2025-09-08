@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 22:33:21 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/08 10:32:04 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/08 11:31:06 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ bool	team_exists(t_ctx *ctx, int team)
 {
 	int	y;
 	int	x;
-	
+
 	y = -1;
 	while (++y < BOARD_SIZE)
 	{
@@ -87,7 +87,7 @@ int	players_in_team(t_ctx *ctx, int team)
 	int	y;
 	int	x;
 	int	res;
-	
+
 	y = -1;
 	res = 0;
 	while (++y < BOARD_SIZE)

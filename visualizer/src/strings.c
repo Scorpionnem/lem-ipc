@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 11:07:37 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/08 11:11:47 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/08 11:26:15 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static int	put_string(t_ctx *ctx, char *str, int val, int yoffset)
 	join_str = ft_strjoin(str, itoa_str);
 	if (!join_str)
 		return (0);
-	mlx_string_put(ctx->mlx, ctx->mlx_win, 5, WIN_SIZE - yoffset, 0xFF0000, join_str);
+	mlx_string_put(ctx->mlx, ctx->mlx_win,
+		5, WIN_SIZE - yoffset, 0xFF0000, join_str);
 	free(join_str);
 	free(itoa_str);
 	return (1);
