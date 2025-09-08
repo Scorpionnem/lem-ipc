@@ -1,19 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   message.h                                          :+:      :+:    :+:   */
+/*   ft_free2d.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/05 10:38:50 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/05 10:42:35 by mbatty           ###   ########.fr       */
+/*   Created: 2025/09/08 10:14:22 by mbatty            #+#    #+#             */
+/*   Updated: 2025/09/08 10:14:29 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MESSAGE_H
-# define MESSAGE_H
+#include "libft.h"
 
-char	*receive_message(int msgqid, int channel);
-int		send_message(char *msg, int msgqid, int channel, int targets_count);
+void	free_2d(char **str)
+{
+	int	i;
 
-#endif
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
+}

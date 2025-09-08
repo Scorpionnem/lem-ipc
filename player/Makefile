@@ -5,7 +5,16 @@ INCLUDES = -I includes -I ../libft/
 
 NAME = lemipc
 
-SRCS = src/main.c src/ctx.c src/error.c src/semaphore.c src/message.c src/game_infos.c src/check_death.c src/move.c src/target.c
+SRCS = src/main.c \
+		src/ctx.c \
+		src/error.c \
+		src/semaphore.c \
+		src/message.c \
+		src/game_infos.c \
+		src/check_death.c \
+		src/move.c \
+		src/target.c \
+		src/exchanges.c
 
 OBJDIR = obj
 OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)

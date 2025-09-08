@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 09:28:13 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/06 22:40:57 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/08 11:08:34 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,21 @@
 # define MIN_BIGGEST_TEAM_COUNT 2
 # define DEATH_THRESHOLD 2
 # define SLEEP_TIME 200000
+# define SQUARE_SIZE 32
+# define MOUSE_LEFT_CLICK 1
+# define MOUSE_RIGHT_CLICK 3
+# define MOUSE_SCROLL_UP 4
+# define MOUSE_SCROLL_DOWN 5
+# define WIN_SIZE 640.0
+
+typedef struct s_gameinfo
+{
+	int	teams;
+	int	last_team_checked;
+	int	biggest_teams;
+	int	biggest_team;
+	int	players;
+}	t_gameinfo;
 
 typedef union u_semun
 {
@@ -76,7 +91,9 @@ typedef struct s_ctx
 	t_shared	*shm;
 }	t_ctx;
 
-int		init_ctx(t_ctx *ctx);
-int		delete_ctx(t_ctx *ctx);
+int			init_ctx(t_ctx *ctx);
+int			delete_ctx(t_ctx *ctx);
+void		draw_board(t_ctx *ctx);
+t_gameinfo	get_game_infos(t_ctx *ctx);
 
 #endif
