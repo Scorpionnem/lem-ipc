@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 09:28:38 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/08 11:08:23 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/08 11:13:55 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	close_window(t_ctx *ctx)
 
 #define ESC_KEY 65307
 #define SPACE_KEY 32
+#define S_KEY 115
 
 int	key_hook(int keycode, t_ctx *ctx)
 {

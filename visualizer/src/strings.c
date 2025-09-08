@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 11:07:37 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/08 11:07:56 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/08 11:11:47 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	put_strings(t_ctx *ctx)
 	if (!put_string(ctx, "teams: ", infos.teams, 15))
 		return (0);
 	if (!put_string(ctx, "biggest team: ", infos.biggest_teams, 5))
+		return (0);
+	if (!put_string(ctx, "paused: ", ctx->shm->paused, 35))
 		return (0);
 	return (1);
 }
