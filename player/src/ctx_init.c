@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 11:46:30 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/08 11:47:40 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/08 12:16:39 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	ctx_init_game(t_ctx *ctx)
 		ctx->leader = true;
 	ctx->pos_x = rand() % BOARD_SIZE;
 	ctx->pos_y = rand() % BOARD_SIZE;
+	if (!players_in_team(ctx, 0))
+		return (error_int("No space left on map"));
 	while (ctx->shm->board[ctx->pos_y][ctx->pos_x] != 0)
 	{
 		ctx->pos_x = rand() % BOARD_SIZE;
