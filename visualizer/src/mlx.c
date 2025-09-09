@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 11:26:58 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/08 16:12:27 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/09 11:18:14 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,9 @@ void	init_mlx(t_ctx *ctx)
 		return ;
 	ctx->img.addr = mlx_get_data_addr(ctx->img.data, &ctx->img.bits_per_pixel,
 			&ctx->img.line_length, &ctx->img.endian);
-	ctx->crown_img.data = mlx_xpm_file_to_image(ctx->mlx, "visualizer/assets/crown.xpm", &ctx->crown_img.width, &ctx->crown_img.height);
+	ctx->crown_img.data = mlx_xpm_file_to_image(ctx->mlx,
+			"visualizer/assets/crown.xpm", &ctx->crown_img.width,
+			&ctx->crown_img.height);
 	if (!ctx->crown_img.data)
 		return ;
 	set_hooks(ctx);

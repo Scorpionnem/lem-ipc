@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 09:28:38 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/08 16:17:54 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/09 11:19:37 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int			put_strings(t_ctx *ctx);
 void		free_mlx(t_ctx *ctx);
 void		init_mlx(t_ctx *ctx);
 int			close_window(t_ctx *ctx);
+int			draw_crowns(t_ctx *ctx, int biggest_team);
+int			draw_mouse_info(t_ctx *ctx, int x, int y, int selected);
 
 void	handle_sigint(int sig)
 {
@@ -63,10 +65,10 @@ int	loop_hook(t_ctx *ctx)
 
 	sem_lock(ctx->semid);
 	infos = get_game_infos(ctx);
-	draw_board(ctx, infos.biggest_team);
+	draw_board(ctx);
 	mlx_put_image_to_window(ctx->mlx, ctx->mlx_win, ctx->img.data, 0, 0);
-	draw_board(ctx, infos.biggest_team);
-	if (!put_strings(ctx) || !g_running)
+	draw_crowns(ctx, infos.biggest_team);
+	if (!put_strings(ctx) || !draw_mouse_info(ctx, 0, 0, 0) || !g_running)
 	{
 		sem_unlock(ctx->semid);
 		return (close_window(ctx));

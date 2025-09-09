@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 10:16:51 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/08 16:18:05 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/09 11:18:32 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,26 @@ static void	put_square(t_ctx *ctx, int x, int y, int color)
 	}
 }
 
-void	draw_board(t_ctx *ctx, int biggest_team)
+int	draw_crowns(t_ctx *ctx, int biggest_team)
+{
+	int	y;
+	int	x;
+
+	y = -1;
+	while (++y < BOARD_SIZE)
+	{
+		x = -1;
+		while (++x < BOARD_SIZE)
+		{
+			if (ctx->shm->board[y][x] == biggest_team)
+				mlx_put_image_to_window(ctx->mlx, ctx->mlx_win,
+					ctx->crown_img.data, x * 32 + 8, y * 32 + 2);
+		}
+	}
+	return (0);
+}
+
+void	draw_board(t_ctx *ctx)
 {
 	int	y;
 	int	x;
@@ -79,8 +98,6 @@ void	draw_board(t_ctx *ctx, int biggest_team)
 				put_square(ctx, x * 32, y * 32, 0x00DD0099);
 			else
 				put_square(ctx, x * 32, y * 32, 0x00009999);
-			if (ctx->shm->board[y][x] == biggest_team)
-				mlx_put_image_to_window(ctx->mlx, ctx->mlx_win, ctx->crown_img.data, x * 32 + 8, y * 32 + 2);
 		}
 	}
 }

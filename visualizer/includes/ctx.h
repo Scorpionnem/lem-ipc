@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 09:28:13 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/08 16:09:00 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/09 10:57:52 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ typedef struct s_ctx
 
 int			init_ctx(t_ctx *ctx);
 int			delete_ctx(t_ctx *ctx);
-void		draw_board(t_ctx *ctx, int biggest);
+void		draw_board(t_ctx *ctx);
 t_gameinfo	get_game_infos(t_ctx *ctx);
 
 #endif

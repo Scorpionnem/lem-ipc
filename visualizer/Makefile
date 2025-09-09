@@ -5,7 +5,7 @@ INCLUDES = -I includes/ -I ../libft/ -I minilibx-linux/
 
 NAME = lemipc-visualizer
 
-SRCS = src/main.c src/ctx.c src/error.c src/semaphore.c src/render.c src/game_infos.c src/strings.c src/ctx_init.c src/mlx.c
+SRCS = src/main.c src/ctx.c src/error.c src/semaphore.c src/render.c src/game_infos.c src/strings.c src/ctx_init.c src/mlx.c src/mouse_info.c
 
 OBJDIR = obj
 OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)
@@ -14,7 +14,7 @@ DEPS = $(SRCS:%.c=$(OBJDIR)/%.d)
 LIBFT = ../libft/libft.a
 MLX = minilibx-linux/libmlx.a
 
-all: $(LIBFT) $(MLX) $(NAME)
+all: minilibx $(LIBFT) $(MLX) $(NAME)
 
 re: fclean all
 
@@ -46,6 +46,15 @@ fclean: clean
 
 run: $(NAME)
 	./$(NAME) avm/sample.avm
+
+minilibx:
+	@if ls | grep -q "minilibx-linux"; then \
+		echo "\033[32;1;4mminilibx-linux Found\033[0m"; \
+	else \
+		echo "\033[31;1;4mminilibx-linux Not Found\033[0m"; \
+		echo "\033[31;1mDownloading minilibx-linux from github \033[0m"; \
+		git clone https://github.com/42paris/minilibx-linux.git minilibx-linux; \
+	fi
 
 .PHONY: all clean fclean run re
 
