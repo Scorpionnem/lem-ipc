@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 09:28:38 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/08 17:39:30 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/09 11:28:43 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	handle_sigint(int sig)
 }
 
 t_gameinfo	get_game_infos(t_ctx *ctx);
-void		handle_exchanges(t_ctx *ctx);
+int		handle_exchanges(t_ctx *ctx);
 
 void	game_loop(t_ctx *ctx)
 {
@@ -37,7 +37,11 @@ void	game_loop(t_ctx *ctx)
 		return ;
 	}
 	find_target(ctx);
-	handle_exchanges(ctx);
+	if (!handle_exchanges(ctx))
+	{
+		g_running = false;
+		return ;
+	}
 	move(ctx);
 }
 
