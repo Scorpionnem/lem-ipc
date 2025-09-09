@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 10:13:39 by mbatty            #+#    #+#             */
-/*   Updated: 2025/09/09 11:31:46 by mbatty           ###   ########.fr       */
+/*   Updated: 2025/09/09 11:33:57 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	receive_messages(t_ctx *ctx)
 {
 	char	*msg;
 	char	**split_msg;
-	
+
 	msg = receive_message(ctx->msgqid, ctx->team);
 	if (msg)
 	{
