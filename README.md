@@ -7,3 +7,5 @@ One for the "player" of the project and one for the visualizer wich can be used 
 
 In the visualizer you can press S to summon a player and scroll to change wich team you are spawning in.
 You can also click to place/break walls that block players.
+
+The visualizer uses the minilibx from 42.
